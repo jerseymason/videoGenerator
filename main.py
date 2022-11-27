@@ -268,17 +268,16 @@ def verifyData(data):
     print("Checking data....")
     if int(data['amountOfVideosToMake']) < 1:
         print("Amount of videos to create is smaller then 1.\nExiting...")
-        quit()
     scrapeVideos(data['pexelsAPIKey'])
-    print("Everything went well! Starting to create videos now!")
+    # print("Everything went well! Starting to create videos now!")
 
 
 def launchImageMagicksInstaller():
     print("Launching installer...")
-    print("In the installer, make sure to select this option(3rd screen):{bcolors.WARNING}legacy utilities(e.g. Convert){bcolors.ENDC}")
+    print(f"In the installer, make sure to select this option(3rd screen):{bcolors.WARNING}legacy utilities(e.g. Convert){bcolors.ENDC}")
     subprocess.run(['imageMagicksInstaller/ImageMagick-7.1.0-52-Q16-HDRI-x64-dll.exe'], stdout=subprocess.PIPE)
 
-def checkIfImageMagicksIsInstalled():
+def checkIfImageMagicksIsInstalled() -> bool:
     terminalOutput = ""
     try:
         result = subprocess.run(['magick', 'identify', '--version'], stdout=subprocess.PIPE)
@@ -291,21 +290,22 @@ def checkIfImageMagicksIsInstalled():
         try:
             TextClip(txt="text") #trying to make a textclip
             print(f"{bcolors.OKGREEN}ImageMagicks is installed correctly{changes}{bcolors.ENDC}")
-            return
+            return True
         except:
             print(f"You did not install ImageMagicks with {bcolors.WARNING}legacy utilities(e.g. Convert){bcolors.ENDC}!\nRerun the installation with this option enabled.")
             x = input("Do you want to reinstall ImageMagicks? (yes/no)")
             if "yes" in x:
                 launchImageMagicksInstaller()
                 checkIfImageMagicksIsInstalled()
-            return
+            return False
+            
     else:
         print("Do you want to install ImageMagicks? (yes/no)")
         x = input("yes or no: ")
         if "yes" in x:
             launchImageMagicksInstaller()
             checkIfImageMagicksIsInstalled()
-        return        
+        return False        
 
 if __name__ == "__main__":
     changes = ""
@@ -335,7 +335,7 @@ Options menu:
     1) Change amount of videos to create
     2) Change Pexels API key
     3) Start generating videos
-    4) Check if ImageMagicks is installed (needed to run)
+    4) Check if ImageMagicks is installed (necessary to run)
     5) Exit
 
     Enter your choice: """)
@@ -350,12 +350,17 @@ Options menu:
                 changes = f"updated your API key successfully to - {data['pexelsAPIKey']}"
             case 3:
                 verifyData(data)
-                videoloop = mainVideoLoop(data)
-                if videoloop:
-                    changes = f"Succesfully completed making {data['amountOfVideosToMake']} video(s)"
+                installed = checkIfImageMagicksIsInstalled()
+                if installed:
+                    videoloop = mainVideoLoop(data)
+                    if videoloop:
+                        changes = f"Succesfully completed making {data['amountOfVideosToMake']} video(s)"
+                    else:
+                        changes = f"An error occurred somewhere above ^ (copy -> sent to developer)"
                 else:
-                    changes = f"An error occurred somewhere above ^ (copy -> sent to developer)"
-                    input("Press enter to return to the main screen")
+                    print("ImageMagicks is needed to run the program...")
+                input("Press enter to return to the main screen")
+
             case 4:
                 checkIfImageMagicksIsInstalled()
                 input("Press enter to return to the main screen")
