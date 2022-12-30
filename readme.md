@@ -13,10 +13,9 @@ https://user-images.githubusercontent.com/80321003/202257209-89529f74-6e4c-4839-
 ![alt text](https://i.imgur.com/CkJYmLg.png)
 
 Example output video with automatic into:
-https://www.youtube.com/shorts/JCElumu8KZ8
+ - Link down will be updated 
 
-Example output video without intro:
-https://youtube.com/shorts/j-xkH3DrD9k
+
 
 ## Features
 - Generate unlimited video's
