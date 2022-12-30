@@ -84,11 +84,19 @@ def usedQuoteToDifferentFile():
         file.write(quote)
 
 
-def getQuote():
+def getQuoteFromApi():
     data = requests.get('https://api.quotable.io/random').json()
     quote = data['content']
     print(f"Quote: {quote}")
     return quote
+
+def getQuoteFromTxtFile():
+    """Get 1 quote from the text file"""
+    with open('quotes/motivational.txt', 'r+', encoding='utf8') as file:
+        lines = file.readlines()
+        x = lines[0].replace("\n","").replace("-", "\n -")
+        print ("Quote: ", x)
+        return x
 
 # def makeMp3(data):
 #     """Make mp3 from the quote text, so we know the duration it takes to read"""
@@ -232,7 +240,7 @@ def mainVideoLoop(data):
         bgVideo = getBackgroundVideo(data['pexelsAPIKey'])
         if bgVideo is None:
             return None
-        quoteText = getQuote()
+        quoteText = getQuoteFromTxtFile()
         # mp3 = makeMp3(quoteText) # make mp3 and save as: speech.mp3
         bgMusic = randomBgMusic()
         ttsAudio = True
