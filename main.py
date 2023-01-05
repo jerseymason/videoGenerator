@@ -128,7 +128,7 @@ def videoIntro(introText, videoNumber) -> CompositeVideoClip:
 
 def createVideo(quoteText: str, bgMusic: str, bgVideo: str, videoNumber: int, ttsAudio: bool):
     """Creates the entire video with everything together - this should be split up in different methods"""
-    introText = ['A quote about never giving up on your dreams','A quote about being yourself','A quote about believing in yourself','A quote about making your dreams come true','A quote about happiness','A quote to remind you to stay positive','A quote about never giving up', 'A quote about being grateful', 'A quote about taking risks', 'A quote about living your best life']
+    introText = ['A quote to motivate your life, keep hustling','A quote about being yourself','A quote about believing in yourself','A quote about making your dreams come true','A quote about happiness','A quote to remind you to stay positive','A quote about never giving up', 'A quote about being grateful', 'A quote about taking risks', 'A quote about living your best life']
     print(f"Introtext we will use: {introText[videoNumber]}")
     intro_final = videoIntro(introText, videoNumber)
 
